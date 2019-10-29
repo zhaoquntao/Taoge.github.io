@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="##排序算法说明  排序的定义:对一序列对象根据某个关键字进行排序。  术语说明:稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面；不稳定：如果a原本在b的前面，而a=b，排序之后a可能会出现在b的后面；内排序：所有排序操作都在内存中完成；外排序：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；时间复杂度： 一个算法执行所耗费的时间。空间复杂度：运行完一个程">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典排序算法">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;03&#x2F;16&#x2F;2018&#x2F;20180315&#x2F;index.html">
+<meta property="og:site_name" content="愚非愚余">
+<meta property="og:description" content="##排序算法说明  排序的定义:对一序列对象根据某个关键字进行排序。  术语说明:稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面；不稳定：如果a原本在b的前面，而a=b，排序之后a可能会出现在b的后面；内排序：所有排序操作都在内存中完成；外排序：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；时间复杂度： 一个算法执行所耗费的时间。空间复杂度：运行完一个程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-10T03:46:14.000Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/03/16/2018/20180315/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>经典排序算法 | 愚非愚余</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">愚非愚余</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">愚非愚余的博客吖</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/16/2018/20180315/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="愚非愚余">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="愚非愚余">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          经典排序算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-16 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-16T00:00:00+08:00">2018-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-10 11:46:14" itemprop="dateModified" datetime="2019-08-10T11:46:14+08:00">2019-08-10</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>##排序算法说明</p>
+<ul>
+<li><p>排序的定义:<br>对一序列对象根据某个关键字进行排序。</p>
+</li>
+<li><p>术语说明:<br>稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面；<br>不稳定：如果a原本在b的前面，而a=b，排序之后a可能会出现在b的后面；<br>内排序：所有排序操作都在内存中完成；<br>外排序：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行；<br>时间复杂度： 一个算法执行所耗费的时间。<br>空间复杂度：运行完一个程序所需内存的大小。</p>
+</li>
+<li><p>算法总结:</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>排序算法</th>
+<th>平均时间复杂度</th>
+<th>空间复杂度</th>
+<th>稳定性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>冒泡排序</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>选择排序</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>插入排序</td>
+<td>O(n²)</td>
+<td>O(1)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>希尔排序</td>
+<td>O(n log n)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td>O(n log n)</td>
+<td>O(log n)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>堆排序</td>
+<td>O(n log n)</td>
+<td>O(1)</td>
+<td>不稳定</td>
+</tr>
+<tr>
+<td>计数排序</td>
+<td>O(n+k)</td>
+<td>O(k)</td>
+<td>稳定</td>
+</tr>
+<tr>
+<td>桶排序</td>
+<td>O(n+k)</td>
+<td>O(n+k)</td>
+<td>稳定</td>
+</tr>
+</tbody></table>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void BubbleSort(int a[], int n)&#123;</span><br><span class="line">    for (int i = 0; i &lt; n; i++)</span><br><span class="line">        for (int j = i+1; j &lt; n; j++)</span><br><span class="line">            if (a[j] &gt; a[i]) &#123;</span><br><span class="line">                int temp =a[i];</span><br><span class="line">                a[i] = a[j];</span><br><span class="line">                a[j] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">void QuikSort(int a[], int numsize)&#123;</span><br><span class="line">    int i=0,j=numsize-1;</span><br><span class="line">    int val=a[0];/*指定参考值val大小*/</span><br><span class="line">    if(numsize&gt;1)/*确保数组长度至少为2，递归出口，这里很重要*/</span><br><span class="line">    &#123;</span><br><span class="line">        while(i&lt;j)/*循环结束条件*/</span><br><span class="line">        &#123;</span><br><span class="line">            /*从后向前搜索比val小的元素，找到后填到a[i]中并跳出循环*/</span><br><span class="line">            for(;j&gt;i;j--)</span><br><span class="line">                if(a[j]&lt;val)&#123;</span><br><span class="line">                    a[i++]=a[j];</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            /*从前往后搜索比val大的元素，找到后填到a[j]中并跳出循环*/</span><br><span class="line">            for(;i&lt;j;i++)</span><br><span class="line">                if(a[i]&gt;val)</span><br><span class="line">                &#123;</span><br><span class="line">                    a[j--]=a[i];</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        a[i]=val;/*将保存在val中的数放到a[i]中*/</span><br><span class="line">        </span><br><span class="line">        QuikSort(a,i);/*递归，对前i个数排序*/</span><br><span class="line">        QuikSort(a+i+1,numsize-1-i);/*对i+1到numsize-1这numsize-1-i个数排序*/</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="直接插入排序"><a href="#直接插入排序" class="headerlink" title="直接插入排序"></a>直接插入排序</h2><h3 id="将还没参加排序的数字，跟已经排序好了得数组来逐个比较，刚好比某个数据大得时候，就插入"><a href="#将还没参加排序的数字，跟已经排序好了得数组来逐个比较，刚好比某个数据大得时候，就插入" class="headerlink" title="将还没参加排序的数字，跟已经排序好了得数组来逐个比较，刚好比某个数据大得时候，就插入"></a>将还没参加排序的数字，跟已经排序好了得数组来逐个比较，刚好比某个数据大得时候，就插入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">void InsertSort(int a[], int n)&#123;</span><br><span class="line">    int i,j;</span><br><span class="line">    //循环从第2个元素开始</span><br><span class="line">    for(i = 1; i &lt; n; i++)&#123;</span><br><span class="line">        if(a[i-1] &lt; a[i]) &#123;</span><br><span class="line">            // temp是待排序数组的第一个元素</span><br><span class="line">            int temp = a[i];</span><br><span class="line">            for(j=i-1; j&gt;=0 &amp;&amp; a[j]&lt;temp; j--)</span><br><span class="line">                a[j+1] =a [j];</span><br><span class="line">            // for循环里还要执行一次j--</span><br><span class="line">            a[j+1] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //    int i,j;</span><br><span class="line">    //    // x是待排序数组的第一个元素</span><br><span class="line">    //    int x;</span><br><span class="line">    //    for ( i = 1; i &lt; n; i++)</span><br><span class="line">    //    &#123;</span><br><span class="line">    //        x = a[i];</span><br><span class="line">    //        for (j = i - 1; j &gt;= 0; j--)</span><br><span class="line">    //            if (a[j] &gt; x)</span><br><span class="line">    //                a[j+1] = a[i];</span><br><span class="line">    //</span><br><span class="line">    //        // 如果已经排好序的数组，最大元素都比x小，就不需要排序</span><br><span class="line">    //            else</span><br><span class="line">    //                break;</span><br><span class="line">    //</span><br><span class="line">    //        a[j+1] = x;</span><br><span class="line">    //</span><br><span class="line">    //    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p> d=5，对数据按照1、2、3、4、5来编号，分别比较编号相同的数据<br> 然后d=2，对数据按照1、2来编号<br>最后d=1，算完后就排好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">void ShellSort(int a[], int n)&#123;</span><br><span class="line">    int i,j,d;</span><br><span class="line">    int x;</span><br><span class="line">    // 这个d的值是随便取的，不超过10就行了</span><br><span class="line">    d=n/2;</span><br><span class="line">    while(d&gt;=1)&#123;</span><br><span class="line">        for(i=d;i &lt; n;i++)&#123;</span><br><span class="line">            x=a[i];</span><br><span class="line">            for(j=i-d;j&gt;=0;j-=d)</span><br><span class="line">                if(a[j]&gt;x)</span><br><span class="line">                    a[j+d]=a[j];</span><br><span class="line">                else</span><br><span class="line">                    break;</span><br><span class="line">            a[j+d]=x;</span><br><span class="line">        &#125;</span><br><span class="line">        // 这里可以输出数组看看每次分组完后的结果</span><br><span class="line">        // 这里的数字控制d分成几组，如果是1得话，d为：5、2、1</span><br><span class="line">        d&gt;&gt;=1;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="直接选择排序"><a href="#直接选择排序" class="headerlink" title="直接选择排序"></a>直接选择排序</h2><h3 id="跟冒泡排序的区别："><a href="#跟冒泡排序的区别：" class="headerlink" title="跟冒泡排序的区别："></a>跟冒泡排序的区别：</h3><p> 跟冒泡排序的联系：<br> 区别：<br> 最大值的交换方式不同，直接选择排序是记录最大值的下标，然后跟需要遍历的数组第一个数字<br> 交换，而冒泡排序是用需要遍历的数组的第一个数字跟后面的数字逐个比较，发现更大的数字就<br> 交换。<br> 相同点：<br> 都是两个for循环，两两逐一比较。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void SelectSort(int a[], int n)&#123;</span><br><span class="line">    for (int i = 0; i &lt; n; i++)&#123;</span><br><span class="line">        int k = i;  // k用来标记最大值的下标</span><br><span class="line">        for (int j = i+1; j &lt; n; j++)</span><br><span class="line">            if (a[j] &gt; a[k])</span><br><span class="line">                k = j;</span><br><span class="line">        // 最大值跟a[i]换位置，a[i]是遍历数组的第一个数</span><br><span class="line">        int temp =a[k];</span><br><span class="line">        a[k] = a[i];</span><br><span class="line">        a[i] = temp;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">void HeapSort(int array[],int length)&#123;</span><br><span class="line">    int tmp;</span><br><span class="line">    /*</span><br><span class="line">     调整序列的前半部分元素，调整完之后第一个元素是序列的最大的元素,</span><br><span class="line">     调整节点：3、2、1、0，这些都是有子节点的，调整后，以这些节点为根节点的二叉树，根节点都是最大的。</span><br><span class="line">     或者理解为：任何一个小二叉树都可以看做是一个大根堆。</span><br><span class="line">     */</span><br><span class="line">    //length/2-1是最后一个非叶节点</span><br><span class="line">    for(int i=length/2-1;i&gt;=0;--i)</span><br><span class="line">        HeapAdjust(array,i,length);</span><br><span class="line">    //从最后一个元素开始对序列进行调整，不断的缩小调整的范围直到第一个元素</span><br><span class="line">    for(int i = length-1;i&gt;0;--i)&#123;</span><br><span class="line">        //把第一个元素(当前最大元素)和当前的最后一个元素交换，</span><br><span class="line">        //保证当前的最后一个位置的元素都是在现在的这个序列之中最大的</span><br><span class="line">        ///Swap(&amp;array[0],&amp;array[i]);</span><br><span class="line">        tmp = array[i];</span><br><span class="line">        array[i]=array[0];</span><br><span class="line">        array[0]=tmp;</span><br><span class="line">        // 不断缩小调整heap的范围，每一次调整完毕保证第一个元素是当前序列的最大值</span><br><span class="line">        // 为什么这里调用一次就可以保证 a[0]最大呢？</span><br><span class="line">        // 因为之前的 for(int i=length/2-1;i&gt;=0;--i) 循环就保证了以每个节点为根节点的二叉树都是</span><br><span class="line">        // 大根堆，也即是说，a[1]或者 a[2]里面有一个值是当前需调整对象的最大值，所以调用一次就行了</span><br><span class="line">        HeapAdjust(array,0,i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//array是待调整的堆数组，i是待调整的数组元素的位置，nlength是数组的长度</span><br><span class="line">//本函数功能是：以i这个节点为根节点，构建大根堆，（即跟以i为父节点，跟i的最大子节点交换数值 ）</span><br><span class="line">void HeapAdjust(int array[],int i, int nLength)</span><br><span class="line">&#123;</span><br><span class="line">    int nChild;</span><br><span class="line">    int nTemp;</span><br><span class="line">    for(;2*i+1&lt;nLength;i=nChild)</span><br><span class="line">    &#123;</span><br><span class="line">        //子结点的位置=2*（父结点位置）+1</span><br><span class="line">        nChild=2*i+1;</span><br><span class="line">        //得到子结点中较大的结点</span><br><span class="line">        if(nChild&lt;nLength-1 &amp;&amp; array[nChild+1]&gt;array[nChild])</span><br><span class="line">            ++nChild;</span><br><span class="line">        //如果较大的子结点大于父结点那么把较大的子结点往上移动，替换它的父结点</span><br><span class="line">        if(array[i]&lt;array[nChild])&#123;</span><br><span class="line">            nTemp = array[i];</span><br><span class="line">            array[i] = array[nChild];</span><br><span class="line">            array[nChild] = nTemp;</span><br><span class="line">        &#125; else</span><br><span class="line">            //否则退出循环</span><br><span class="line">            break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><h3 id="先拆，拆的同时两两排序，合并，两两合并"><a href="#先拆，拆的同时两两排序，合并，两两合并" class="headerlink" title="先拆，拆的同时两两排序，合并，两两合并"></a>先拆，拆的同时两两排序，合并，两两合并</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">void Merge(int a[],int b[],int s,int m,int e)&#123;</span><br><span class="line">    int i,j,k;</span><br><span class="line">    // m、e是不动的，j来记录数组b存到哪里了，s判断前半段，i判断后半段</span><br><span class="line">    for(i=m+1,j=s; s&lt;=m &amp;&amp; i&lt;=e; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        // printf(&quot;s:%d m:%d e:%d i:%d j:%d\n&quot;,s,m,e,i,j);</span><br><span class="line">        // 谁小就把谁放到数组b中，同时往后移动一位，</span><br><span class="line">        if(a[s] &lt;= a[i])</span><br><span class="line">            b[j]=a[s++];</span><br><span class="line">        else</span><br><span class="line">            b[j]=a[i++];</span><br><span class="line">    &#125;</span><br><span class="line">    // s这个时候没有超过m，而i超过了e，所以上面的循环结束了</span><br><span class="line">    if(s &lt;= m)&#123;</span><br><span class="line">        for(k = 0;k &lt;= m-s; k++)</span><br><span class="line">            b[j+k] = a[s+k];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // i这个时候没有超过e，而s超过了m，所以上面的循环结束了</span><br><span class="line">    if(i &lt;= e)&#123;</span><br><span class="line">        for( k=0 ; k&lt;= e-i; k++)</span><br><span class="line">            b[j+k] = a[i+k];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//内部使用递归，空间复杂度为n+logn</span><br><span class="line">void MergeSort(int a[],int b[],int s,int e)&#123;</span><br><span class="line">    int m, *temp;</span><br><span class="line">    // 一定要记住，递归要一个出口</span><br><span class="line">    if(s == e)&#123;</span><br><span class="line">        b[s] = a[s];</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        temp = (int*)malloc((e - s+1)*sizeof(int));</span><br><span class="line">        m = (s + e)/2;</span><br><span class="line">        MergeSort(a, temp, s, m);</span><br><span class="line">        MergeSort(a, temp, m+1, e);</span><br><span class="line">        // 查看递归过程，只看最后一个0、3、7的就可以了</span><br><span class="line">        // printf(&quot;s:%d m:%d e:%d \n&quot;,s,m,e);</span><br><span class="line">        Merge(temp, b, s, m, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>参考:<a href="https://blog.csdn.net/hellozhxy/article/details/79911867" target="_blank" rel="noopener">https://blog.csdn.net/hellozhxy/article/details/79911867</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2017/04/27/2017/20170427/" rel="next" title="冒泡排序和插入排序详解">
+                  <i class="fa fa-chevron-left"></i> 冒泡排序和插入排序详解
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/08/01/2019/20190801/" rel="prev" title="iOS 组件化相关讨论文章汇总">
+                  iOS 组件化相关讨论文章汇总 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序"><span class="nav-number">1.</span> <span class="nav-text">冒泡排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序"><span class="nav-number">2.</span> <span class="nav-text">快速排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接插入排序"><span class="nav-number">3.</span> <span class="nav-text">直接插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#将还没参加排序的数字，跟已经排序好了得数组来逐个比较，刚好比某个数据大得时候，就插入"><span class="nav-number">3.1.</span> <span class="nav-text">将还没参加排序的数字，跟已经排序好了得数组来逐个比较，刚好比某个数据大得时候，就插入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#希尔排序"><span class="nav-number">4.</span> <span class="nav-text">希尔排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接选择排序"><span class="nav-number">5.</span> <span class="nav-text">直接选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#跟冒泡排序的区别："><span class="nav-number">5.1.</span> <span class="nav-text">跟冒泡排序的区别：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆排序"><span class="nav-number">6.</span> <span class="nav-text">堆排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序"><span class="nav-number">7.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#先拆，拆的同时两两排序，合并，两两合并"><span class="nav-number">7.1.</span> <span class="nav-text">先拆，拆的同时两两排序，合并，两两合并</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="愚非愚余"
+    src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">愚非愚余</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">愚非愚余</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.4.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="true"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '20bc898628cf351d4f4b',
+      clientSecret: '0b0f6fe0dad3cf1db435aea4690bb82d33340f8d',
+      repo: 'taoge.github.io',
+      owner: '愚非愚余',
+      admin: ['germey'],
+      id: 'b4cc030e9e436adc4a3211384283e9c8',
+        language: 'zh-CN',
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+
+    </div>
+</body>
+</html>

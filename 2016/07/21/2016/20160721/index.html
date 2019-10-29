@@ -30,7 +30,7 @@
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
-    pangu: false,
+    pangu: true,
     algolia: {
       appID: '',
       apiKey: '',
@@ -50,17 +50,18 @@
   };
 </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="由于iOS设备的限制，想处理好应用程序中的性能是一件难事。我们在开发过程中会有很多地方是需要注意的，当然也很容易在做出选择时忘记考虑性能影响。 对tableView的优化：UITableView作为iOS开发中最重要的控件之一,为了获得更好的滑动性能,我们可以采取以下的措施: ·正确使用reuseIdentifier来重用cells ·尽量使所有的view opaque，包括cell自身 ·如果c">
+<meta name="keywords" content="优化">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;hello-world&#x2F;index.html">
+<meta property="og:title" content="iOS应用程序中UITableView的性能优化(最全面)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2016&#x2F;07&#x2F;21&#x2F;2016&#x2F;20160721&#x2F;index.html">
 <meta property="og:site_name" content="愚非愚余">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="由于iOS设备的限制，想处理好应用程序中的性能是一件难事。我们在开发过程中会有很多地方是需要注意的，当然也很容易在做出选择时忘记考虑性能影响。 对tableView的优化：UITableView作为iOS开发中最重要的控件之一,为了获得更好的滑动性能,我们可以采取以下的措施: ·正确使用reuseIdentifier来重用cells ·尽量使所有的view opaque，包括cell自身 ·如果c">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-29T07:57:32.247Z">
+<meta property="og:updated_time" content="2019-08-09T10:00:54.000Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2019/10/29/hello-world/">
+<link rel="canonical" href="http://yoursite.com/2016/07/21/2016/20160721/">
 
 
 <script id="page-configurations">
@@ -74,7 +75,7 @@
   };
 </script>
 
-  <title>Hello World | 愚非愚余</title>
+  <title>iOS应用程序中UITableView的性能优化(最全面) | 愚非愚余</title>
   
 
 
@@ -143,6 +144,16 @@
     <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
@@ -175,7 +186,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/21/2016/20160721/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -188,7 +199,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          iOS应用程序中UITableView的性能优化(最全面)
         </h1>
 
         <div class="post-meta">
@@ -198,8 +209,15 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2019-10-29 15:57:32" itemprop="dateCreated datePublished" datetime="2019-10-29T15:57:32+08:00">2019-10-29</time>
+              <time title="Created: 2016-07-21 00:00:00" itemprop="dateCreated datePublished" datetime="2016-07-21T00:00:00+08:00">2016-07-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-09 18:00:54" itemprop="dateModified" datetime="2019-08-09T18:00:54+08:00">2019-08-09</time>
+              </span>
 
           
 
@@ -212,19 +230,52 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>由于iOS设备的限制，想处理好应用程序中的性能是一件难事。我们在开发过程中会有很多地方是需要注意的，当然也很容易在做出选择时忘记考虑性能影响。</p>
+<p>对tableView的优化：<br>UITableView作为iOS开发中最重要的控件之一,为了获得更好的滑动性能,我们可以采取以下的措施:</p>
+<p>·正确使用<code>reuseIdentifier</code>来重用cells</p>
+<p>·尽量使所有的view opaque，包括cell自身</p>
+<p>·如果cell内现实的内容来自web，使用异步加载，缓存请求结果</p>
+<p>·避免渐变，图片缩放</p>
+<p>·使用<code>shadowPath</code>来画阴影</p>
+<p>·缓存行高</p>
+<p>·减少subviews的数量</p>
+<p>·尽量不适用<code>cellForRowAtIndexPath:</code>，如果你需要用到它，只用一次然后缓存结果</p>
+<p>·使用正确的数据结构来存储数据</p>
+<p>·尽量少于或者不用透明图层</p>
+<p>以下是详细的介绍:</p>
+<p>1、在应用程序中正确的地方使用：ReuseIdentifier</p>
+<p>我们在开发中常见的错误就是没有给UITableViewCells，UICollectionViewCells，甚至是UITableViewHeaderFooterViews设置正确的reuseIdentifier。</p>
+<p>在优化性能时，table view用<code>tableView:cellForRowAtIndexPath:</code>为rows分配cells的时候，它的数据应该重用自UITableViewCell。一个table view维持一个队列的数据可重用的UITableViewCell对象。当然如果不使用reuseIdentifier的话，每显示一行table view就需要设置全新的cell。这样一来对应用程序性能的影响非常的大，特别会使app的滚动体验大大的降低。</p>
+<p>从iOS6起，除了对UICollectionView的cells和补充views，也应该在header和footer views中使用reuseIdentifiers，使用reuseIdentifiers的话，在一个table view中添加一个新的cell时在data source 方法中添加这个方法：</p>
+<p>staticNSString*ID =@”MyCell”;</p>
+<p>UITableViewCell*cell = [tableViewdequeueReusableCellWithIdentifier:ID];</p>
+<p>这个方法可以把那些已经存在的cell从队列中排除，或者在必要时使用先前注册的nib或者class创造新的cell。如果没有可重用的cell，也没有注册一个class或者nib的话，这个方法就会返回nil。</p>
+<p>2、在开发的过程中要尽量把Views设置为透明色：</p>
+<p>如果应用中有透明的Views我们应该设置它们的opaque属性为YES。</p>
+<p>其原因是这样会使系统用一个最优的方式渲染这些views。这个属性在IB或者代码里都可以设定。</p>
+<p>Apple的文档对于为图片设置透明属性的描述是：</p>
+<p>(opaque)这个属性给渲染系统提供了一个如何处理这个view的提示。如果设为YES，渲染系统就认为这个view是完全不透明的，这使得渲染系统优化一些渲染过程和提高性能。如果设置为NO，渲染系统正常地和其它内容组成这个View。默认值是YES。</p>
+<p>在相对比较静止的画面中，设置这个属性不会有太大影响。然而当这个view嵌在scroll view里边，或者是一个复杂动画的一部分，不设置这个属性的话会在很大程度上影响app的性能。所以我们可以在模拟器中用Debug\Color Blended Layers选项来发现哪些view没有被设置为opaque。目标就是，能设为opaque的就全设为opaque!</p>
+<p>3、在ImageView中调整图片的大小：</p>
+<p>如果要在<code>UIImageView</code>中显示一个来自bundle的图片，你应保证图片的大小和UIImageView的大小相同。在运行中缩放图片是很耗费资源的，特别是<code>UIImageView</code>嵌套在<code>UIScrollView</code>中的情况下。</p>
+<p>如果图片是从远端服务加载的你不能控制图片大小，比如在下载前调整到合适大小的话，你可以在下载完成后，最好是用background thread，缩放一次，然后在UIImageView中使用缩放后的图片。</p>
+<p>4、选择正确的数据格式：</p>
+<p>从app和网络服务间传输数据有很多方案，最常见的就是JSON和XML。如果让我们选择对app来说最合适的一个，那么解析JSON会比XML更快一些，JSON也通常更小更便于传输。从iOS5起就有了官方内建的JSON deserialization就更加方便使用了。</p>
+<p>但是使用XML也有XML的好处，比如使用SAX来解析XML就像解析本地文件一样，我们不需像解析json一样等到整个文档下载完成才开始解析，那么当我们处理很大的数据的时候就会极大地减低内存消耗和增加性能。</p>
+<p>XML的解析方式：</p>
+<p>①DOM解析：是将文档一次性全部下载到本地在按节点进行解析，这样对我们的应用程序的内存消耗极大，手机本身的内存就不是很大，不像电脑那样有很大的内存，可见这种解析方式不太适用于手机，即手机无法直接使用 DOM 的方式来解析 XML；</p>
+<p>②SAX解析：是一种只读的方式，在文档中按照节点从上之下的方式来进行解析，是苹果提供的解析方式，虽然节点是一次性读取的，但是节点中的内容是多次读取的，这种解析方式的速度相当的快，可以用NSXMLParser通过代理方法来实现解析；</p>
+<p>SAX解析方式的步骤：</p>
+<p>①开始文档—准备工作</p>
+<p>②开始”节点”</p>
+<p>③发现节点内部的内容，每一个节点，可能都需要多次解析才能完成</p>
+<p>④结束”节点”</p>
+<p>⑤结束文档—解析结束</p>
+<p>以上步骤，②、③、④会不断循环，一直到所有的解析完成。</p>
+<p>5、避免反复处理数据：</p>
+<p>我们的应用需要从服务器加载所需的常用的JSON或者XML格式的数据。在服务器端和客户端使用相同的数据结构很重要。在内存中操作数据使它们满足我们的数据结构开销很大的。</p>
+<p>譬如我们需要数据来展示一个table view,最好直接从服务器取array结构的数据以避免额外的中间数据结构改变。相似的，如果需要从特定key中取数据，那么就使用键值对的dictionary。</p>
+<p>如果以上总结有欠缺的地方,请大神多多指教.</p>
 
     </div>
 
@@ -233,18 +284,24 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BC%98%E5%8C%96/" rel="tag"># 优化</a>
+          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+                <a href="/2016/05/27/2016/20160527/" rel="next" title="iOS 编程 返回到指定页面的方法和理解">
+                  <i class="fa fa-chevron-left"></i> iOS 编程 返回到指定页面的方法和理解
+                </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/10/29/404/" rel="prev" title="404">
-                  404 <i class="fa fa-chevron-right"></i>
+                <a href="/2016/08/20/2016/20160820/" rel="prev" title="CalculateHeight">
+                  CalculateHeight <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -285,7 +342,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -301,9 +357,15 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -360,6 +422,7 @@
   
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="true"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script>
@@ -457,7 +520,7 @@ window.addEventListener('pjax:success', () => {
       repo: 'taoge.github.io',
       owner: '愚非愚余',
       admin: ['germey'],
-      id: '33b2ff4762371bd225f22e68738e8d5c',
+      id: '4621679bf15b435af9254588499c9725',
         language: 'zh-CN',
       distractionFreeMode: 'true'
     });

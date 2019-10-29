@@ -50,15 +50,18 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;categories&#x2F;index.html">
+  <meta name="description" content="关于ios中 viewcontroller的跳转问题，其中有一种方式是采用navigationController pushViewController 的方法，比如我从主页面跳转到了一级页面，又从一级页面跳转到了二级页面，然后从二级页面跳转到了三级页面，依次类推。，如果一级一级的返回我知道是没有问题的. 方法一: 12UIViewController *viewCtl = self.naviga">
+<meta name="keywords" content="杂记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 编程 返回到指定页面的方法和理解">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2016&#x2F;05&#x2F;27&#x2F;2016&#x2F;20160527&#x2F;index.html">
 <meta property="og:site_name" content="愚非愚余">
+<meta property="og:description" content="关于ios中 viewcontroller的跳转问题，其中有一种方式是采用navigationController pushViewController 的方法，比如我从主页面跳转到了一级页面，又从一级页面跳转到了二级页面，然后从二级页面跳转到了三级页面，依次类推。，如果一级一级的返回我知道是没有问题的. 方法一: 12UIViewController *viewCtl = self.naviga">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-29T08:39:55.384Z">
+<meta property="og:updated_time" content="2019-08-09T09:43:34.000Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/categories/">
+<link rel="canonical" href="http://yoursite.com/2016/05/27/2016/20160527/">
 
 
 <script id="page-configurations">
@@ -66,14 +69,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
-    isPage: true,
+    isPost: true,
+    isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>categories | 愚非愚余
-  </title>
+  <title>iOS 编程 返回到指定页面的方法和理解 | 愚非愚余</title>
   
 
 
@@ -175,57 +177,118 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
           <div class="content">
             
 
   <div class="posts-expand">
-    
-    
-    
-    <div class="post-block" lang="zh-Hans">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">categories
-</h1>
-
-<div class="post-meta">
+      
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/27/2016/20160527/">
 
-</div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="愚非愚余">
+      <meta itemprop="description" content="">
+    </span>
 
-</header>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="愚非愚余">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS 编程 返回到指定页面的方法和理解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-05-27 00:00:00" itemprop="dateCreated datePublished" datetime="2016-05-27T00:00:00+08:00">2016-05-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-08-09 17:43:34" itemprop="dateModified" datetime="2019-08-09T17:43:34+08:00">2019-08-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      
-      
-      <div class="post-body">
-          <div class="category-all-page">
-            <div class="category-all-title">
-              No categories
+        <p>关于ios中 viewcontroller的跳转问题，其中有一种方式是采用navigationController pushViewController 的方法，比如我从主页面跳转到了一级页面，又从一级页面跳转到了二级页面，然后从二级页面跳转到了三级页面，依次类推。，如果一级一级的返回我知道是没有问题的.</p>
+<p>方法一:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UIViewController *viewCtl = self.navigationController.viewControllers[2];</span><br><span class="line">    [self.navigationController popToViewController:viewCtl animated:YES];</span><br></pre></td></tr></table></figure>
+
+<p>你自己算 你是第几级界面  然后pop回去就可以了</p>
+<p>方法二:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (void)backAction&#123;</span><br><span class="line">    UINavigationController *nav = self.navigationController;</span><br><span class="line">    NSMutableArray *viewControllers = [[NSMutableArray alloc] init];</span><br><span class="line">    for (UIViewController *vc in [nav viewControllers]) &#123;</span><br><span class="line">        [viewControllers addObject:vc];</span><br><span class="line">        if (vc isKindOfClass:[MyNeedJumpVC Class]) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    [nav setViewControllers:viewControllers animated:YES];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>​self.navigationController是当前的页面；</p>
+<p><strong>MyNeedJumpVC</strong> 是我们需要跳转的页面；</p>
+<p>UINavigationController导航控制器初始化 导航控制器栈的push和pop跳转理解</p>
+<p>（1）导航控制器初始化的时候一般都有一个根视图控制器，导航控制器相当于一个栈，里面装的是视图控制器，最先进去的在最下面，最后进去的在最上面。在最上面的那个视图控制器的视图就是这个导航控制器对外展示的界面，也就是用户看到的界面。</p>
+<p>（2）我们需要把导航控制器加载到APP中，需要把这个导航控制器设置为window的根视图控制器（都是控制器类，可以赋值），这样就相当于加载到了window里。</p>
+<p>（3）我们要在栈中新增或者删除一个视图控制器，就需要得到导航控制器，一般在栈中得所有视图控制器都有一个self.navigationController，意思是我的导航控制器，也就是这个视图控制器所在的导航控制器，这样就拿到了导航控制器。</p>
+<p>（4）栈中新增视图控制器用pushViewController，其实就是push进去一个，这样对于用户而言就是打开一个新界面了。</p>
+<p>（5）栈中删除一个视图控制器用popViewControllerAnimated，当然这个pop只能pop最上面的那个，对于用户而言相当于从当前视图回到上一级视图。</p>
+<p>（6）其实这个push和pop对于用户而言都是打开和跳转页面的一个操作。而pop由更多地操作方法，如一下子pop掉只剩下一个根视图控制器，那么就相当于从好几层直接回到最原始的主页面。也可以指定pop几个，以跳转到指定的页面。</p>
+<p>（7）最重要的应该就是这个push和pop方法，而pop有很多种，这个理解后就不难记忆。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9D%82%E8%AE%B0/" rel="tag"># 杂记</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
             </div>
-            <div class="category-all">
-              
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2016/07/21/2016/20160721/" rel="prev" title="iOS应用程序中UITableView的性能优化(最全面)">
+                  iOS应用程序中UITableView的性能优化(最全面) <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
-        
-      </div>
-      
-      
-      
-    </div>
+      </footer>
     
+  </article>
+  
+  
+  
 
-    
-    
-    
   </div>
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
         </div>
           
@@ -418,6 +481,23 @@ window.addEventListener('pjax:success', () => {
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '20bc898628cf351d4f4b',
+      clientSecret: '0b0f6fe0dad3cf1db435aea4690bb82d33340f8d',
+      repo: 'taoge.github.io',
+      owner: '愚非愚余',
+      admin: ['germey'],
+      id: 'b81981900a91bf882ce5fc27f00a989a',
+        language: 'zh-CN',
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
 
     </div>
 </body>
